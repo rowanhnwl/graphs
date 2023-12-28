@@ -3,10 +3,25 @@
 #ifndef NODE_HPP
 #define NODE_HPP
 
+class Node;
+
+class Edge {
+    public:
+        Node* from;
+        Node* to;
+        int weight;
+
+        Edge(Node* f, Node* t, int w){
+            from = f;
+            to = t;
+            weight = w;
+        }
+};
+
 class Node {
     private:
         int id;
-        std::vector<std::pair<Node*, int>> adjNodes; // Holds nodes and weights
+        std::vector<Edge> incidentEdges; // Holds nodes and weights CHANGE
         
         // Members for searching
         char colour;
@@ -22,8 +37,7 @@ class Node {
         char get_colour();
         Node* get_p();
         int get_dist();
-        int get_n_adj();
-        std::pair<Node*, int> access_node(int index); // Access an adjacent node and the edge weight by index
+        std::vector<Edge>& get_edges(); // Access an adjacent node and the edge weight by index
         int query_edge(int to_id); // Check if a specific edge exists (returns the index)
 
         // Modifiers
