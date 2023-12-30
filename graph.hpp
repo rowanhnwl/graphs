@@ -13,8 +13,8 @@ class Graph {
         Graph();
 
         // Accessors
-        int query_node(int id); // Checks if a node exists in the graph and returns its index
-        int query_edge(int from_id, int to_id); // Checks if an edge exists (from, to), returns the weight
+        int get_node_index(int id); // Checks if a node exists in the graph and returns its index
+        std::vector<Edge*> query_edges(int from_id, int to_id); // Checks if an edge exists (from, to), returns it
         int get_n_nodes();
         int get_n_edges();
         Node* get_node(int id); // Get a pointer to a node by ID
@@ -24,8 +24,6 @@ class Graph {
         bool delete_edge(int from_id, int to_id); // Deletes an edge (from, to)
         bool insert_node(int id); // Inserts a node into the graph
         bool delete_node(int id); // Deletes a node (and its connections)
-        bool change_node_id(int old_id, int new_id);
-        bool change_edge_weight(int from_id, int to_id, int w);
 
         // Operator overload
         Node* operator[](int index); // Access a node at a given index

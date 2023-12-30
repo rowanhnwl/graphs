@@ -39,19 +39,16 @@ std::vector<Edge>& Node::get_edges(){
 }
 
 // Check if a specific edge exists
-int Node::query_edge(int adj_id){
+std::vector<Edge*> Node::query_edges(int adj_id){
+    std::vector<Edge*> edges = {};
+
     for (int edge_index = 0; edge_index < (int)incidentEdges.size(); edge_index++){
         if ((incidentEdges[(long long unsigned int)edge_index].to) -> id == adj_id){
-            return edge_index;
+            edges.push_back(&incidentEdges[(long long unsigned int)edge_index]);
         }
     }
 
-    return -1;
-}
-
-// Change the ID
-void Node::change_id(int new_id){
-    id = new_id;
+    return edges;
 }
 
 // Change the node's colour
@@ -75,30 +72,22 @@ void Node::insert_edge(Node* to_node, int w){
     incidentEdges.push_back(new_edge);
 }
 
-// Delete a node from the adjacency list
+// Delete an edge from the list of incident edges
 bool Node::delete_edge(int del_id){
-    int edge_index = query_edge(del_id);
+    std::vector<Edge*> edges = query_edges(del_id);
 
-    if (edge_index == -1){
+    if (edges.size() == 0){
         return false;
     }
 
+    Edge* e = edges[0];
+
     // Delete all connections
-    while (edge_index != -1){
-        incidentEdges.erase(std::next(incidentEdges.begin(), edge_index));
-        edge_index = query_edge(del_id);
-    }
-
-    return true;
-}
-
-// Change the weight of an edge
-bool Node::change_edge_weight(int to_id, int w){
-    int edge_index = query_edge(to_id);
-
-    if (edge_index != -1){
-        incidentEdges[(long long unsigned int)edge_index].weight = w;
-        return true;
+    for (int edge_index = 0; edge_index < (int)incidentEdges.size() && e != nullptr; edge_index++){
+        if (&incidentEdges[(long long unsigned int)edge_index] == e){
+            incidentEdges.erase(std::next(incidentEdges.begin(), edge_index));
+            return true;
+        }
     }
 
     return false;
@@ -118,6 +107,10 @@ void Node::clear_edges(){
 
 // Print the adjacent nodes
 void Node::print_adj_nodes(){
+    if ((int)incidentEdges.size() == 0){
+        std::cout << "No incident edges";
+    }
+
     for (int edge_index = 0; edge_index < (int)incidentEdges.size(); edge_index++){
         std::cout << "(ID: " << (incidentEdges[(long long unsigned int)edge_index].to) -> id << ", W: " << incidentEdges[(long long unsigned int)edge_index].weight << ") ";
     }

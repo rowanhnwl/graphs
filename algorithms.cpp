@@ -37,9 +37,11 @@ void Algorithms::SSSP::bfs(Graph& g, int s_id){
         Node* u_p = bfs_queue.front();
         bfs_queue.pop();
 
+        std::vector<Edge>& u_edges = u_p -> get_edges();
+
         // Iterate through the nodes adjacent to u_p
-        for (int adj_index = 0; adj_index < u_p -> get_n_adj(); adj_index++){
-            Node* v_p = (u_p -> access_node(adj_index)).first;
+        for (int edge_index = 0; edge_index < (int)u_edges.size(); edge_index++){
+            Node* v_p = u_edges[(size_t)edge_index].to;
 
             // Change the attributes of the unvisited adjacent nodes
             if (v_p -> get_colour() == 'w'){
@@ -77,8 +79,10 @@ void dijkstra(Graph& g, int s_id){
         Node* u_p = pq.top();
         pq.pop();
 
-        for (int adj_index = 0; adj_index < u_p -> get_n_adj(); adj_index++){
-            Node* v_p = (u_p -> access_node(adj_index)).first;
+        std::vector<Edge>& u_edges = u_p -> get_edges();
+
+        for (int edge_index = 0; edge_index < (int)u_edges.size(); edge_index++){
+            Node* v_p = u_edges[(size_t)edge_index].to;
 
             // Change the attributes for the unvisited node
             if (v_p -> get_colour() == 'w'){
@@ -95,9 +99,10 @@ void dijkstra(Graph& g, int s_id){
 */
 
 // Path relaxation
-bool Algorithms::Utilities::relax(Node* u, int adj_index){
-    Node* v = (u -> access_node(adj_index)).first;
-    int w_uv = (u -> access_node(adj_index)).second;
+bool Algorithms::Utilities::relax(Edge* e){
+    Node* u = e -> from;
+    Node* v = e -> to;
+    int w_uv = e -> weight;
     
     if (v -> get_dist() > u -> get_dist() + w_uv){
         // Update the distance and predecessor of node v
@@ -126,8 +131,8 @@ std::vector<Node*> Algorithms::Utilities::construct_path(Graph& g, int dest_id){
     }
 
     // Reverse the path
-    for (int node_index = path_rev.size() - 1; node_index >= 0; node_index--){
-        path.push_back(path_rev[node_index]);
+    for (int node_index = (int)path_rev.size() - 1; node_index >= 0; node_index--){
+        path.push_back(path_rev[(size_t)node_index]);
     }
 
     return path;
@@ -137,7 +142,7 @@ std::vector<Node*> Algorithms::Utilities::construct_path(Graph& g, int dest_id){
 void Algorithms::Utilities::print_path(std::vector<Node*> path){
     std::cout << std::endl;
     for (int node_index = 0; node_index < (int)path.size(); node_index++){
-        std::cout << path[node_index] -> get_id();
+        std::cout << path[(size_t)node_index] -> get_id();
         
         if (node_index < (int)path.size() - 1){
             std::cout << " -> ";

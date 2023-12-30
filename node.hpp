@@ -38,16 +38,14 @@ class Node {
         Node* get_p();
         int get_dist();
         std::vector<Edge>& get_edges(); // Access an adjacent node and the edge weight by index
-        int query_edge(int to_id); // Check if a specific edge exists (returns the index)
+        std::vector<Edge*> query_edges(int to_id); // Check if a specific edge exists (returns all instances)
 
         // Modifiers
-        void change_id(int new_id);
         void change_colour(char new_colour);
         void change_p(Node* new_p);
         void change_dist(int new_dist);
         void insert_edge(Node* new_node, int w);
-        bool delete_edge(int del_id); // Delete a node based on its ID (returns the status)
-        bool change_edge_weight(int id, int w);
+        bool delete_edge(int del_id); // Delete an edge based on its ID (returns the status)
 
         // Utilities
         void reset();
