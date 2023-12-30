@@ -29,7 +29,7 @@ namespace Algorithms {
     // Utility functions
     namespace Utilities {
         // Path relaxation
-        bool relax(Node* u, int adj_index);
+        bool relax(Edge* edge);
 
         // Construct a path through back-tracking from the destination
         std::vector<Node*> construct_path(Graph& g, int dest_id);

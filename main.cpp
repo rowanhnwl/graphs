@@ -5,24 +5,41 @@
 #include "algorithms.hpp"
 
 int main(void){
-    Graph new_graph;
-    
-    for (int i = 1; i <= 5; i++){
-        new_graph.insert_node(i);
+    Graph g;
+
+    for (int i = 1; i <= 8; i++){
+        g.insert_node(i);
     }
 
-    new_graph.insert_edge(1, 2, 1);
-    new_graph.insert_edge(2, 3, 1);
-    new_graph.insert_edge(1, 4, 1);
-    new_graph.insert_edge(2, 5, 1);
-    new_graph.insert_edge(3, 4, 1);
-    new_graph.insert_edge(4, 5, 1);
-    new_graph.insert_edge(5, 3, 1);
+    g.insert_edge(1, 2, 1);
+    g.insert_edge(1, 6, 1);
 
-    Algorithms::SSSP::bfs(new_graph, 1);
+    g.insert_edge(2, 3, 1);
+    g.insert_edge(2, 8, 1);
+    g.insert_edge(2, 8, 1);
+    g.insert_edge(2, 7, 1);
 
-    std::vector<Node*> path = Algorithms::Utilities::construct_path(new_graph, 3);
+    g.insert_edge(3, 4, 1);
+    g.insert_edge(3, 8, 1);
+
+    g.insert_edge(4, 5, 1);
+    g.insert_edge(4, 8, 1);
+
+    g.insert_edge(5, 1, 1);
+    g.insert_edge(5, 8, 1);
+
+    g.insert_edge(6, 3, 1);
+    g.insert_edge(6, 7, 1);
+
+    g.insert_edge(7, 4, 1);
+    g.insert_edge(7, 8, 1);
+
+    g.insert_edge(8, 5, 1);
+    g.insert_edge(8, 6, 1);
+    g.insert_edge(8, 8, 1);
+
+    Algorithms::SSSP::bfs(g, 1);
+
+    std::vector<Node*> path = Algorithms::Utilities::construct_path(g, 5);
     Algorithms::Utilities::print_path(path);
-
-    //new_graph.print_graph();
 }
